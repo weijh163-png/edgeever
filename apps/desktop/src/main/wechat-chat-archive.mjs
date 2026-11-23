@@ -140,10 +140,8 @@ export const wechatChatNoteFromArchive = (bytes, archiveName = WECHAT_TRANSCRIPT
 
   const note = renderWeChatChat(text, archiveName, entries.filter((entry) => entry !== transcript && entry.data.length > 0));
   if (!note) throw new WeChatArchiveError("unrecognized");
-  const { unsupportedOnly, media, ...content } = note;
-  if (unsupportedOnly) throw new WeChatArchiveError("unsupported-messages");
   return {
-    ...content,
-    media: media.map(({ data, ...item }) => ({ ...item, bytes: data })),
+    ...note,
+    media: note.media.map(({ data, ...item }) => ({ ...item, bytes: data })),
   };
 };
